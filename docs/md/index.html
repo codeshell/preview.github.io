@@ -34,9 +34,9 @@
 	</style>
 </head>
 
-<body>
+<body class="markdown-body">
 
-	<form id="previewform" onsubmit="location.href='/md/?'+this.file.value;return false">
+	<form id="previewform" onsubmit="location.href=location.pathname+'?'+this.file.value;return false">
 		<h1>Markdown Preview</h1>
 		<p>
 			Enter URL of the MD file to render as HTML:<br />
@@ -46,16 +46,16 @@
 		</p>
 		<p>
 			or manually prepend this page URL to your file link with a questionmark:<br />
-			<code><strong>https://md.github.io/?</strong>https://example.com/url/to/your/markdown-file.md</code>
+			<code><strong id="example_host1">https://example.github.io/</strong>?https://example.com/url/to/your/markdown-file.md</code>
 		</p>
 		<table>
 			<tr>
-				<td>s</td>
-				<td>d</td>
+				<td>source</td>
+				<td>file link</td>
 			</tr>
 			<tr>
 				<td>gist</td>
-				<td><code><strong>http://md.github.io/?</strong>https://gist.github.com/codeshell/f728adac0bcc42a7f02104190c54170d/raw/TMW%20Floccus%20sync%20features%20matrix.md</code>
+				<td><code><strong id="example_host2">https://example.github.io/?</strong>https://gist.github.com/codeshell/f728adac0bcc42a7f02104190c54170d/raw/TMW%20Floccus%20sync%20features%20matrix.md</code>
 				</td>
 			</tr>
 		</table>
@@ -96,6 +96,8 @@
 				breaks: true
 			});
 			document.title = dompurify.sanitize(decodeURIComponent(title));
+			document.getElementById('example_host1').innerHTML = location.protocol+'//'+location.hostname+location.pathname;
+			document.getElementById('example_host2').innerHTML = location.protocol+'//'+location.hostname+location.pathname;
 			document.getElementById('content').innerHTML =
 				dompurify.sanitize(marked.parse(md));
 		} else {
